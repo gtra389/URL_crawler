@@ -37,7 +37,7 @@ df = pd.DataFrame(columns=['id', 'time', 'weather', 'air', 'acc'])
 end = len(content)/28
 end = math.floor(end)
 
-for ii in range(0,5):
+for ii in range(0,end):
     lst1 = content[1+ii*28]
     lst2 = content[3+ii*28]
     lst3 = content[5+ii*28:10+ii*28]
