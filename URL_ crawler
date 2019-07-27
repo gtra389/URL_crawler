@@ -1,0 +1,54 @@
+
+#!/usr/bin/env python
+#
+#
+# Available device:
+# Manufacturer: 
+# Product number:
+# Serial communication protocol:
+# Purpose:
+# Enable users to crawl the data from the URL
+#
+
+# Including
+import requests
+from bs4 import BeautifulSoup
+import re
+import pandas as pd
+#import math
+
+URL = 'http://ec2-54-175-179-28.compute-1.amazonaws.com/get_info_extra.php'
+page = requests.get(URL).text
+
+regex = re.compile('\s+|,')  # Regular expression
+soup = BeautifulSoup(page, 'lxml')
+content = soup.body.getText()
+content = regex.split(content)
+
+# Remove the '=' element from the list
+content = list(filter(lambda a: a != '=', content))
+# Remove the ''  element from the list
+content = list(filter(lambda a: a != '', content))
+
+# Create a dataframe 
+df = pd.DataFrame(columns=['id', 'time', 'weather', 'air', 'acc'])
+end = len(content)/28
+end = math.floor(end)
+
+for ii in range(0,5):
+    lst1 = content[1+ii*28]
+    lst2 = content[3+ii*28]
+    lst3 = content[5+ii*28:10+ii*28]
+    str3 = [';'.join(str(jj) for jj in lst3)]
+    lst4 = content[12+ii*28:25+ii*28]
+    str4 = [';'.join(str(jj) for jj in lst4)]
+    lst5 = content[27+ii*28]
+    
+    df1 = pd.DataFrame(
+            {'id': lst1,
+             'time': lst2,
+             'weather': str3,
+             'air': str4,
+             'acc':lst5
+            })    
+    df = df.append(df1, ignore_index=True)
