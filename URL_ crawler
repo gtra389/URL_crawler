@@ -1,13 +1,15 @@
 
 #!/usr/bin/env python
 #
-#
 # Available device:
 # Manufacturer: 
 # Product number:
 # Serial communication protocol:
+#
 # Purpose:
 # Enable users to crawl the data from the URL
+# Take the URL conneting with the Xitou Database as an example
+# URL: http://ec2-54-175-179-28.compute-1.amazonaws.com/get_info_extra.php
 #
 
 # Including
